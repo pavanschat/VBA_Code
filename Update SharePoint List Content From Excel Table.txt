@@ -1,0 +1,47 @@
+Option Explicit
+
+Sub link_edit_Mode()
+    
+    ' developer name : Pavan kumar
+    
+    ' Code to fetch the  content of sharepoint list
+
+    Sheets("Data").Cells.Clear
+    
+    
+    Dim mySh As Worksheet
+    Dim spSite As String
+    
+    Set mySh = Sheets("Data")
+    
+    Dim src(0 To 1) As Variant
+    
+    spSite = "type your site name" 'site name
+
+    src(0) = spSite & "/_vti_bin"
+    
+    src(1) = "Type your GUID here" 'GUID
+      
+    mySh.ListObjects.Add xlSrcExternal, src, True, xlYes, mySh.Range("A1")
+    
+    Sheets("Data").Select
+    
+    Worksheets("Data").Columns("A:Z").AutoFit
+    
+    
+    MsgBox "Data load process has completed", vbInformation
+        
+End Sub
+
+
+Sub WriteBack()
+
+	'write back the content from Excel to sharepoint list
+
+	Sheets("Data").Select
+	ActiveSheet.ListObjects(1).UpdateChanges xlListConflictDialog
+    
+	MsgBox "Synchronization process has been completed", vbInformation
+
+End Sub
+
